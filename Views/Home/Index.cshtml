@@ -1,0 +1,73 @@
+﻿@model IEnumerable<Task1.Models.Employee>
+
+@{
+    ViewBag.Title = "Index";
+}
+<br />
+<br />
+<br />
+<br />
+<table id="example"  class="cell-border table-bordered table-striped table-hover" style="width:100%">
+    <thead>
+        <tr>
+            <th>
+                Employee Id
+            </th>
+            <th>
+                Department Name
+            </th>
+            <th>
+                Frist Name
+            </th>
+            <th>
+               Last Name
+            </th>
+            <th>
+                Birth Of Date
+            </th>
+            <th>
+                Manage
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            var date = item.DOB.ToString("MM/dd/yyyy");
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EmployeeID)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.Department.DepartmentName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FristName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LastName)
+                </td>
+                <td>
+                    @date
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.EmployeeID }, new { @class = " btn btn-success" } )
+                       @Html.ActionLink("Delete", "Delete", "Home", new { id = item.EmployeeID } , new { @class = "Comfirm btn btn-danger " })
+
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+@section Scripts {
+    <script src="~/Scripts/datatables.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#example').DataTable();
+        });
+        $('.Comfirm').click(function () {
+            return confirm("do you wont to delet this employee !!");
+        });
+    </script>
+}

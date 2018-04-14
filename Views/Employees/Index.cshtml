@@ -1,0 +1,84 @@
+﻿@model IEnumerable<Task1.Models.Employee>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>All Employees</h2>
+
+@using (Ajax.BeginForm("Search", "Employees", new AjaxOptions()
+{
+    UpdateTargetId = "grid",
+    HttpMethod = "post",
+    InsertionMode = InsertionMode.Replace
+
+
+}))
+
+{
+    <div>
+        <label>Frist Name</label>
+        @Html.TextBox("FName")
+        <label>Last Name Name</label>
+        @Html.TextBox("LName")
+        <input type="submit" name="name" value="Search" />
+    </div>
+
+}
+<div id="grid">
+
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Department.DepartmentName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FristName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LastName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DOB)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            var date = item.DOB.ToString("MM/dd/yyyy");
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Department.DepartmentName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FristName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LastName)
+                </td>
+                <td>
+                  @date
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.EmployeeID }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.EmployeeID }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.EmployeeID })
+                </td>
+            </tr>
+        }
+
+    </table>
+
+</div>
+
+@section Scripts {
+    <script src="~/Scripts/datatables.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#myBtn").click(function () {
+                $("#myModal").modal();
+            });
+        });
+    </script>
+}
